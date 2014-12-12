@@ -61,11 +61,9 @@ namespace Lightspeed
             var stream = await response.Content.ReadAsStreamAsync();
             StreamReader reader = new StreamReader(stream);
             JavaScriptSerializer js = new JavaScriptSerializer();
-
-            var tmpObj = js.Deserialize<dynamic>(reader.ReadToEnd());
-            TResult obj = js.Deserialize<TResult>(js.Serialize(tmpObj[key]));
+            var tmpObj = js.Deserialize<Dictionary<string, TResult>>(reader.ReadToEnd());
             reader.Close();
-            return obj;
+            return tmpObj[key];
         }
     }
 }
