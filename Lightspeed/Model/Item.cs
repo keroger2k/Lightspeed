@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+using System.Web.Script.Serialization;
 namespace Lightspeed.Model
 {
     public class Item
@@ -23,10 +25,19 @@ namespace Lightspeed.Model
         public int sessionID { get; set; }
         public int defaultVendorID { get; set; }
         public int itemECommerceID { get; set; }
+        public Image WeirdImage {
+            get
+            {
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                return js.Deserialize<Image>(js.Serialize(this.Images["Image"]));
+            }
+        }
+        public dynamic Images { get; set; }
+        public Category Category { get; set; }
 
         public override string ToString()
         {
-             return string.Format("ItemId: {0}, SKU: {1}, Description: {2}", this.itemId, this.customSku, this.description);
+            return string.Format("ItemId: {0}, SKU: {1}, Description: {2}", this.itemId, this.customSku, this.description);
         }
     }
 }

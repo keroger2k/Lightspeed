@@ -12,5 +12,10 @@ namespace Lightspeed.Model
         public int rightNode { get; set; }
         public int parentID { get; set; }
         public DateTime timeStamp { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Name: {1}", this.categoryID, this.name);
+        }
     }    
 }

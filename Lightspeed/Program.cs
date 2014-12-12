@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Lightspeed
 {
@@ -8,10 +9,10 @@ namespace Lightspeed
         {
             var x = new LightSpeed();
             //var y = x.GetItem(4);
-            //var a = x.GetItems();
+            var a = x.GetItems();
             //var z = x.GetAllCategories();
 
-            var b = x.GetItemImage(99);
+            //var b = x.GetItemImage(99);
 
             //foreach (var item in a)
             //{

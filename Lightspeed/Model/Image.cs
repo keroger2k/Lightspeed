@@ -8,6 +8,7 @@ namespace Lightspeed.Model
         public string filename { get; set; }
         public int ordering { get; set; }
         public string publicID { get; set; }
+        public string baseImageURL { get; set; }
         public int itemID { get; set; }
         public int itemMatrixID { get; set; }
 
@@ -15,7 +16,7 @@ namespace Lightspeed.Model
         {
             get
             {
-                return string.Format("https://res.cloudinary.com/lightspeed-retail/image/upload/{0}.jpg", publicID);
+                return string.Format("{0}{1}.jpg", baseImageURL, publicID);
             }
         }
     }

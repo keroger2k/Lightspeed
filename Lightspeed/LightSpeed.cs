@@ -1,5 +1,6 @@
 ﻿using Lightspeed.Model;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Script.Serialization;
 
 namespace Lightspeed
@@ -42,7 +44,7 @@ namespace Lightspeed
 
         public ICollection<Item> GetItems()
         {
-            return Get<ICollection<Item>>(string.Format(API_URL + "&limit=200", "Item"), "Item").Result;
+            return Get<ICollection<Item>>(string.Format(API_URL + "&limit=2&load_relations=[\"Images\",\"Category\"]", "Item"), "Item").Result;
         }
 
         public ICollection<Category> GetAllCategories()
@@ -59,7 +61,10 @@ namespace Lightspeed
             var stream = await response.Content.ReadAsStreamAsync();
             StreamReader reader = new StreamReader(stream);
             JavaScriptSerializer js = new JavaScriptSerializer();
+            //var d = reader.ReadToEnd();
             var tmpObj = js.Deserialize<dynamic>(reader.ReadToEnd());
+
+
             TResult obj = js.Deserialize<TResult>(js.Serialize(tmpObj[key]));
             reader.Close();
             return obj;
