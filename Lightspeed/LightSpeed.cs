@@ -34,7 +34,7 @@ namespace Lightspeed
 
         public Item GetItem(int itemId)
         {
-            return Get<Item>(string.Format(API_URL, "Item/" + itemId), "Item").Result;
+            return Get<Item>(string.Format(API_URL + "&limit=200&load_relations=[\"Images\",\"Category\"]", "Item/" + itemId), "Item").Result;
         }
 
         public Image GetItemImage(int itemId)
@@ -44,7 +44,7 @@ namespace Lightspeed
 
         public ICollection<Item> GetItems()
         {
-            return Get<ICollection<Item>>(string.Format(API_URL + "&limit=2&load_relations=[\"Images\",\"Category\"]", "Item"), "Item").Result;
+            return Get<ICollection<Item>>(string.Format(API_URL + "&limit=200&load_relations=[\"Images\",\"Category\"]", "Item"), "Item").Result;
         }
 
         public ICollection<Category> GetAllCategories()
@@ -61,10 +61,8 @@ namespace Lightspeed
             var stream = await response.Content.ReadAsStreamAsync();
             StreamReader reader = new StreamReader(stream);
             JavaScriptSerializer js = new JavaScriptSerializer();
-            //var d = reader.ReadToEnd();
+
             var tmpObj = js.Deserialize<dynamic>(reader.ReadToEnd());
-
-
             TResult obj = js.Deserialize<TResult>(js.Serialize(tmpObj[key]));
             reader.Close();
             return obj;

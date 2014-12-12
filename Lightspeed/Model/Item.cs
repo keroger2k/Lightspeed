@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Web.Script.Serialization;
 namespace Lightspeed.Model
 {
@@ -25,15 +26,14 @@ namespace Lightspeed.Model
         public int sessionID { get; set; }
         public int defaultVendorID { get; set; }
         public int itemECommerceID { get; set; }
-        public Image WeirdImage {
-            get
-            {
-                JavaScriptSerializer js = new JavaScriptSerializer();
-                return js.Deserialize<Image>(js.Serialize(this.Images["Image"]));
-            }
-        }
-        public dynamic Images { get; set; }
+        
+        public Dictionary<string, List<Image>> Images { get; set; }
         public Category Category { get; set; }
+
+        public List<Image> GetImages()
+        {
+            return this.Images["Image"];
+        }
 
         public override string ToString()
         {
